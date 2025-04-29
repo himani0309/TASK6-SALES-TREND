@@ -1,0 +1,29 @@
+-- STEP 1: Create Table
+CREATE TABLE online_sales (
+    order_id INTEGER,
+    order_date DATE,
+    amount DECIMAL,
+    product_id INTEGER
+);
+
+-- STEP 2: Insert Sample Data
+INSERT INTO online_sales VALUES
+(1, '2024-01-10', 1500.00, 101),
+(2, '2024-01-15', 2000.00, 102),
+(3, '2024-02-05', 1000.00, 103),
+(4, '2024-03-20', 2500.00, 101),
+(5, '2024-03-25', 3000.00, 104),
+(6, '2024-03-28', 500.00, 102);
+
+-- STEP 3: Aggregation Query for Sales Trend Analysis
+SELECT 
+    STRFTIME('%Y', order_date) AS year,
+    STRFTIME('%m', order_date) AS month,
+    SUM(amount) AS revenue,
+    COUNT(DISTINCT order_id) AS total_orders
+FROM 
+    online_sales
+GROUP BY 
+    year, month
+ORDER BY 
+    revenue DESC;
